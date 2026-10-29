@@ -1,0 +1,53 @@
+{
+  "name": "snackpdf",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "install:ci": "bash scripts/install-ci.sh",
+    "dev": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vite",
+    "build": "bash scripts/build-verified.sh",
+    "build:engine-assets": "node scripts/build-engine-assets.mjs && node scripts/version-service-worker.mjs",
+    "build:source": "node scripts/build-source-archive.mjs",
+    "start": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext start",
+    "test": "npm run build && node --test --test-concurrency=1 tests/*.test.mjs",
+    "test:unit": "npm run build:engine-assets && node --test tests/engine.unit.test.mjs",
+    "test:integration": "npm run build:engine-assets && node --test --test-concurrency=1 tests/engine.integration.test.mjs tests/fidelity.integration.test.mjs",
+    "test:browsers": "npm run build && PLAYWRIGHT_BROWSERS_PATH=.playwright-browsers playwright test",
+    "test:release": "npm test && npm run test:browsers",
+    "test:production": "node tests/production-smoke.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern static-site --ignore-pattern .next --ignore-pattern .playwright-browsers --ignore-pattern playwright-report --ignore-pattern test-results"
+  },
+  "dependencies": {
+    "@okathira/ghostpdl-wasm": "1.1.0",
+    "next": "16.3.2",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.3.289",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "tesseract.js": "^7.0.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.11.1",
+    "@cloudflare/vite-plugin": "1.37.1",
+    "@playwright/test": "1.58.2",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "@vitejs/plugin-rsc": "0.5.26",
+    "esbuild": "0.28.2",
+    "eslint": "9.39.4",
+    "eslint-config-next": "16.2.6",
+    "react-server-dom-webpack": "19.2.6",
+    "typescript": "5.9.3",
+    "vinext": "0.0.50",
+    "vite": "8.0.13",
+    "wrangler": "4.92.0"
+  },
+  "type": "module",
+  "displayName": "SnackPDF"
+}

@@ -1,0 +1,38 @@
+%!PS-Adobe-3.0
+%%Pages: 1
+%%BoundingBox: 0 0 612 792
+%%EndComments
+
+/Helvetica findfont 18 scalefont setfont
+72 742 moveto (Compression profile benchmark) show
+
+gsave
+72 500 translate
+216 216 scale
+/width 900 def
+/height 900 def
+/scanline width 3 mul string def
+/row 0 def
+width height 8
+[width 0 0 height neg 0 height]
+{
+  0 1 width 1 sub {
+    /column exch def
+    /offset column 3 mul def
+    scanline offset column 255 mul width 1 sub idiv put
+    scanline offset 1 add row 255 mul height 1 sub idiv put
+    scanline offset 2 add column row add 255 mul width height add 2 sub idiv put
+  } for
+  /row row 1 add def
+  scanline
+}
+false 3 colorimage
+grestore
+
+0 setgray
+2 setlinewidth
+72 500 216 216 rectstroke
+/Helvetica findfont 12 scalefont setfont
+72 476 moveto (900 x 900 deterministic colour image rendered at 300 DPI) show
+showpage
+%%EOF

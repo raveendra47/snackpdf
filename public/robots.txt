@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /engine/
+Disallow: /ocr/
+
+Sitemap: https://www.snackpdf.com/sitemap.xml

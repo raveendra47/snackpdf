@@ -1,0 +1,287 @@
+import type { EngineTool } from "../../src/engine/types";
+
+export type ToolKind =
+  | "single"
+  | "multiple"
+  | "pages"
+  | "thumbnails-remove"
+  | "thumbnails-reorder"
+  | "images"
+  | "password";
+
+export interface ToolDefinition {
+  slug: string;
+  title: string;
+  seoTitle: string;
+  seoDescription: string;
+  engineTool: EngineTool;
+  group: "Optimise" | "Organise" | "Convert" | "Security";
+  description: string;
+  detail: string;
+  atAGlance: string;
+  action: string;
+  resultLabel: string;
+  kind: ToolKind;
+  warning?: string;
+  special?: "ocr" | "redact" | "form" | "protect";
+}
+
+export const TOOLS: ToolDefinition[] = [
+  {
+    slug: "compress-pdf",
+    title: "Compress PDF",
+    seoTitle: "Compress PDF Without Uploading | SnackPDF",
+    seoDescription: "Compress a PDF locally in your browser without uploading it. No account is needed, and the private compressor works offline after preparation.",
+    engineTool: "compress",
+    group: "Optimise",
+    description: "Reduce PDF file size with a fixed quality profile.",
+    detail: "Rebuild one PDF with a clear choice between image quality and file size.",
+    atAGlance: "Input: 1 PDF · Output: 1 PDF · Original file unchanged",
+    action: "Compress PDF",
+    resultLabel: "Download compressed PDF",
+    kind: "single",
+  },
+  {
+    slug: "rebuild-pdf",
+    title: "Rebuild PDF",
+    seoTitle: "Rebuild PDF | SnackPDF",
+    seoDescription: "Create a fresh PDF from readable content in an existing file. It runs locally in your browser; forms, links, bookmarks and metadata may change.",
+    engineTool: "rebuild",
+    group: "Optimise",
+    description: "Create a fresh copy from readable PDF content.",
+    detail: "Create a fresh PDF from content the local processor can read in the original.",
+    atAGlance: "Input: 1 PDF · Output: 1 PDF · Original file unchanged",
+    action: "Rebuild PDF",
+    resultLabel: "Download rebuilt PDF",
+    kind: "single",
+    warning: "Rewriting can change or remove comments, forms, bookmarks, links, metadata and other non-visible features.",
+  },
+  {
+    slug: "grayscale-pdf",
+    title: "Grayscale PDF",
+    seoTitle: "Convert PDF to Grayscale Locally | SnackPDF",
+    seoDescription: "Convert a PDF to grayscale locally without uploading it. SnackPDF creates a fresh copy on your device and can work offline after preparation.",
+    engineTool: "grayscale",
+    group: "Optimise",
+    description: "Convert PDF colours to shades of grey.",
+    detail: "Convert the rendered colours in a PDF to shades of grey on this device.",
+    atAGlance: "Input: 1 PDF · Output: 1 PDF · Original file unchanged",
+    action: "Make grayscale PDF",
+    resultLabel: "Download grayscale PDF",
+    kind: "single",
+    warning: "The result is a newly generated PDF. Check important layouts before relying on it.",
+  },
+  {
+    slug: "merge-pdf",
+    title: "Merge PDF files",
+    seoTitle: "Merge PDF Files Locally and Privately | SnackPDF",
+    seoDescription: "Merge 2–50 confidential PDF files locally in your browser. Files are not uploaded, no account is needed, and the originals stay unchanged.",
+    engineTool: "merge",
+    group: "Organise",
+    description: "Combine PDF files in a chosen order.",
+    detail: "Choose two or more PDFs, arrange their order and create one combined PDF.",
+    atAGlance: "Input: 2–50 PDFs · Output: 1 PDF · Order follows the list · Original files unchanged",
+    action: "Merge PDFs",
+    resultLabel: "Download merged PDF",
+    kind: "multiple",
+    warning: "Merging rewrites the PDFs. Comments, forms, bookmarks, links, metadata and other structures may change.",
+  },
+  {
+    slug: "split-pdf",
+    title: "Split PDF into individual pages",
+    seoTitle: "Split PDF Locally Without Uploading | SnackPDF",
+    seoDescription: "Split a PDF into separate page files locally in your browser without uploading it. No account is required and the original stays unchanged.",
+    engineTool: "split",
+    group: "Organise",
+    description: "Save every PDF page as its own file.",
+    detail: "Create one separate PDF for every page in the original document.",
+    atAGlance: "Input: 1 PDF · Output: 1 PDF per page · Original file unchanged",
+    action: "Split PDF",
+    resultLabel: "Download page",
+    kind: "single",
+    warning: "Each page is written as a fresh PDF. Interactive and document-level structures may change or disappear.",
+  },
+  {
+    slug: "extract-pages",
+    title: "Extract pages from PDF",
+    seoTitle: "Extract PDF pages locally | SnackPDF",
+    seoDescription: "Save selected PDF pages in the range and order you enter. SnackPDF creates one new PDF locally in your browser.",
+    engineTool: "extract",
+    group: "Organise",
+    description: "Save selected PDF pages in a chosen order.",
+    detail: "Choose page numbers or ranges and create one PDF in the order you enter them.",
+    atAGlance: "Input: 1 PDF · Output: 1 selected-pages PDF · Original file unchanged",
+    action: "Extract pages",
+    resultLabel: "Download extracted pages",
+    kind: "pages",
+    warning: "Selected pages are rewritten into a fresh PDF. Interactive and document-level structures may change.",
+  },
+  {
+    slug: "remove-pages",
+    title: "Remove pages from PDF",
+    seoTitle: "Remove PDF Pages Privately | SnackPDF",
+    seoDescription: "Remove selected PDF pages privately with on-device previews. Nothing is uploaded, no account is required, and at least one page is retained.",
+    engineTool: "remove",
+    group: "Organise",
+    description: "Delete selected pages using local previews.",
+    detail: "Select the pages you do not want and create a fresh PDF from the pages that remain.",
+    atAGlance: "Input: 1 PDF · Output: 1 PDF · At least 1 page retained · Original file unchanged",
+    action: "Remove selected pages",
+    resultLabel: "Download PDF",
+    kind: "thumbnails-remove",
+    warning: "Retained pages are rewritten into a fresh PDF. Interactive and document-level structures may change.",
+  },
+  {
+    slug: "reorder-pages",
+    title: "Reorder PDF pages",
+    seoTitle: "Reorder PDF pages locally | SnackPDF",
+    seoDescription: "Rearrange PDF pages with drag-and-drop or keyboard controls. The new file is created locally in your browser.",
+    engineTool: "reorder",
+    group: "Organise",
+    description: "Arrange every PDF page in a new order.",
+    detail: "Arrange pages with drag and drop or keyboard-friendly move buttons.",
+    atAGlance: "Input: 1 PDF · Output: 1 PDF · Every page retained · Original file unchanged",
+    action: "Create reordered PDF",
+    resultLabel: "Download reordered PDF",
+    kind: "thumbnails-reorder",
+    warning: "Pages are rewritten into a fresh PDF. Interactive and document-level structures may change.",
+  },
+  {
+    slug: "pdf-to-jpg",
+    title: "PDF to JPG",
+    seoTitle: "Convert PDF to JPG Without Uploading | SnackPDF",
+    seoDescription: "Convert PDF pages to JPG images locally at 96, 150 or 300 DPI. Files stay on your device, with no upload or account required.",
+    engineTool: "pdf-to-jpg",
+    group: "Convert",
+    description: "Render PDF pages as separate JPEG images.",
+    detail: "Convert every PDF page to a separate JPEG image on this device.",
+    atAGlance: "Input: 1 PDF · Output: 1 JPEG per page · 96, 150 or 300 DPI · Original file unchanged",
+    action: "Convert to JPG",
+    resultLabel: "Download JPG",
+    kind: "images",
+  },
+  {
+    slug: "pdf-to-png",
+    title: "PDF to PNG",
+    seoTitle: "PDF to PNG | SnackPDF",
+    seoDescription: "Convert every PDF page to a separate PNG at 96, 150 or 300 DPI. Rendering happens locally in your browser.",
+    engineTool: "pdf-to-png",
+    group: "Convert",
+    description: "Render PDF pages as separate PNG images.",
+    detail: "Convert every PDF page to a separate PNG image on this device.",
+    atAGlance: "Input: 1 PDF · Output: 1 PNG per page · 96, 150 or 300 DPI · Original file unchanged",
+    action: "Convert to PNG",
+    resultLabel: "Download PNG",
+    kind: "images",
+  },
+  {
+    slug: "pdf-to-text",
+    title: "Extract text from PDF",
+    seoTitle: "Extract text from PDF | SnackPDF",
+    seoDescription: "Extract text already stored in a PDF into a UTF-8 file. Processing runs locally in your browser and does not perform OCR.",
+    engineTool: "pdf-to-text",
+    group: "Convert",
+    description: "Extract stored PDF text without OCR.",
+    detail: "Extract text already stored in the PDF; scanned images are not recognised with OCR.",
+    atAGlance: "Input: 1 PDF · Output: 1 UTF-8 text file · No OCR · Original file unchanged",
+    action: "Extract text",
+    resultLabel: "Download text file",
+    kind: "single",
+  },
+  {
+    slug: "ocr-pdf",
+    title: "Extract text from scanned PDF",
+    seoTitle: "Extract Text from a Scanned PDF Locally | SnackPDF",
+    seoDescription: "Extract text from scanned PDF pages locally in your browser with bundled OCR. The document stays on your device and the result can be copied or downloaded.",
+    engineTool: "pdf-to-text",
+    group: "Convert",
+    description: "Recognise printed text in scanned PDF pages.",
+    detail: "Render each page locally, recognise printed English text and download the result as a plain text file.",
+    atAGlance: "Input: 1 scanned PDF · Output: page-by-page text + UTF-8 .txt · Local OCR · Original file unchanged",
+    action: "Extract text from scan",
+    resultLabel: "Download OCR text",
+    kind: "single",
+    special: "ocr",
+  },
+  {
+    slug: "redact-pdf",
+    title: "Redact PDF content",
+    seoTitle: "Redact PDF Content Locally | SnackPDF",
+    seoDescription: "Permanently redact PDF areas on your device by rasterising affected pages. Removed content is not selectable or searchable in the saved PDF.",
+    engineTool: "pdf-to-text",
+    group: "Security",
+    description: "Permanently remove selected page areas.",
+    detail: "Draw solid redaction boxes, replace affected pages with raster images and save a PDF without the original page text layer.",
+    atAGlance: "Input: 1 PDF · Output: 1 redacted PDF · Affected pages rasterised · Original file unchanged",
+    action: "Apply redactions",
+    resultLabel: "Download redacted PDF",
+    kind: "single",
+    special: "redact",
+    warning: "Redacted pages lose searchable and selectable text. Review every page and keep the original separate.",
+  },
+  {
+    slug: "fill-pdf-form",
+    title: "Fill PDF form",
+    seoTitle: "Fill PDF Forms Locally | SnackPDF",
+    seoDescription: "Fill existing PDF form fields locally in your browser and save the completed file. Your document stays on your device and no account is required.",
+    engineTool: "pdf-to-text",
+    group: "Organise",
+    description: "Fill existing fields and save a completed PDF.",
+    detail: "Detect AcroForm fields, enter values in this browser and save a completed PDF without uploading the form.",
+    atAGlance: "Input: 1 PDF form · Output: 1 completed PDF · Local editing · Original file unchanged",
+    action: "Save completed form",
+    resultLabel: "Download completed form",
+    kind: "single",
+    special: "form",
+    warning: "Existing AcroForm fields can be filled directly. Flat PDFs use positioned static marks. The PDF font may limit which characters can be saved.",
+  },
+  {
+    slug: "protect-pdf",
+    title: "Protect PDF with a password",
+    seoTitle: "Password Protect a PDF Locally | SnackPDF",
+    seoDescription: "Add AES-256 password protection to a PDF locally in your browser. Choose an open password, owner password and advisory reader permissions without uploading the file.",
+    engineTool: "unlock",
+    group: "Security",
+    description: "Add AES-256 password protection and reader permissions.",
+    detail: "Encrypt a PDF on this device with a real open password and optional owner password.",
+    atAGlance: "Input: 1 PDF · Output: 1 encrypted PDF · AES-256 · Original file unchanged",
+    action: "Protect PDF",
+    resultLabel: "Download protected PDF",
+    kind: "single",
+    special: "protect",
+    warning: "Permissions are advisory: conforming readers may honour them, but a determined tool can ignore them. Encryption is not redaction; anyone with the open password can see everything in the file.",
+  },
+  {
+    slug: "unlock-pdf",
+    title: "Unlock PDF",
+    seoTitle: "Unlock PDF Locally With a Known Password | SnackPDF",
+    seoDescription: "Unlock a PDF locally when you know its password and are authorised to open it. The file and password stay in your browser during processing.",
+    engineTool: "unlock",
+    group: "Security",
+    description: "Create an unlocked copy with a known password.",
+    detail: "Create an unlocked copy of a PDF you are authorised to open and whose password you know.",
+    atAGlance: "Input: 1 password-protected PDF + known password · Output: 1 PDF · Original file unchanged",
+    action: "Unlock PDF",
+    resultLabel: "Download unlocked PDF",
+    kind: "password",
+    warning: "The password stays in this tab for the current operation and is cleared afterwards.",
+  },
+];
+
+export const TOOL_BY_SLUG = new Map(TOOLS.map((tool) => [tool.slug, tool]));
+
+export const LEGAL_SLUGS = [
+  "about",
+  "privacy",
+  "terms",
+  "cookies",
+  "open-source-licences",
+  "offline-use",
+  "how-snackpdf-is-tested",
+  "support",
+] as const;
+export type LegalSlug = (typeof LEGAL_SLUGS)[number];
+
+export function isLegalSlug(value: string): value is LegalSlug {
+  return LEGAL_SLUGS.includes(value as LegalSlug);
+}
